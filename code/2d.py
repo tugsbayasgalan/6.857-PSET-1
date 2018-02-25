@@ -1,9 +1,11 @@
 import string
+
+#decrypt given byte using formula in the pset
 def decrypt(cipher_prev, cipher, pad, inverse_map):
     return inverse_map[cipher ^ pad] ^ cipher_prev
 
 
-
+#create a public mapping function g and its inverse g^-1
 def create_map(filename):
     with open(filename, 'r') as f:
         g_map = {}
@@ -19,6 +21,8 @@ def create_map(filename):
                 index += 1
     return g_map, g_inverse_map
 
+
+#load the ciphertexts
 def get_ciphertext(filename):
     cipher_texts = []
     with open(filename, 'r') as f:
@@ -31,7 +35,7 @@ def get_ciphertext(filename):
             cipher_texts.append(result_array)
     return cipher_texts
 
-
+#search for the pad
 def find_pad(cipher_texts, inverse_map):
     possible_chars = set()
 
@@ -47,17 +51,11 @@ def find_pad(cipher_texts, inverse_map):
             for cipher_text in cipher_texts:
                 if decrypt(cipher_text[index-1], cipher_text[index], pad_value, inverse_map) not in possible_chars:
                     valid = False
+            #if it outputs something meaningful for all ciphertexts
             if valid:
                 correct_pad.append(pad_value)
 
     return correct_pad
-
-
-
-
-
-
-
 
 
 if __name__ == '__main__':

@@ -1,5 +1,5 @@
 from nltk.corpus import words
-import binascii
+
 
 def xor(input1, input2):
     assert len(input1) == len(input2)
@@ -63,18 +63,13 @@ if __name__ == '__main__':
 
     c_xor = xor(c1_binary, c2_binary)
 
-
-    same_padding = False
-
-    correct_word1 = ""
-    correct_word2 = ""
-
     for word in possible_words:
         binary_word = convert_word_to_binary(word)
 
         second_binary_word = xor(binary_word, c_xor)
         second_possible_word = convert_binary_to_word(second_binary_word)
+
         if second_possible_word in possible_words:
             print("This is the first word: {}".format(word))
             print("This is the second word: {}".format(second_possible_word))
-            #break
+            break
